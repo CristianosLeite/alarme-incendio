@@ -1,0 +1,33 @@
+.pulse {
+    width: 200px;
+    animation: pulse 1s infinite;
+}
+
+.idle {
+    width: 200px;
+}
+
+h1, h3, h4 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    flex-flow: column;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

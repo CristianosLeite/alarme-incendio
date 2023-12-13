@@ -1,0 +1,63 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.body {
+    min-height: 300px;
+    min-width: 800;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.connections {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 150px;
+    padding: 10px;
+}
+
+.status {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 250px;
+    margin-top: 5px;
+}
+
+.device-master {
+    display: block;
+    height: 70px;
+    width: 180px;
+    z-index: 100;
+}
+
+.grid {
+    display: block;
+    position: absolute;
+    height: 80px;
+    width: 80%;
+    margin-top: -20px;
+}
+
+.slot-slave {
+    display: flex;
+    height: 100px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    margin: 40px;
+}
+
+.device-slave {
+    margin-top: 20px;
+    display: block;
+    height: 70px;
+    width: 180px;
+    z-index: 100;
+}

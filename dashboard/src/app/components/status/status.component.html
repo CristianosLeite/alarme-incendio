@@ -1,0 +1,43 @@
+<div class="failure" *ngIf="status === 'failure' ">
+    <div class="content">
+        <img src="../../../assets/images/status_falha.png" alt="status falha" class="pulse">
+        <h1>
+            Alerta de falha
+        </h1>
+        <h3>
+            Um ou mais setores apresentam falhas
+        </h3>
+        <h4>
+            O sistema de alarme de incêndio pode estar inoperante.
+        </h4>
+    </div>
+</div>
+<div class="active" *ngIf="status === 'active' ">
+    <div class="content">
+        <img src="../../../assets/images/status_acionado.png" alt="status ativo" class="pulse">
+        <h1>
+            Alerta de alarme
+        </h1>
+        <h3>
+            O alarme de incêndio foi acionado em {{ device }}
+        </h3>
+        <h4>
+            Dirija-se a um ponto de encontro.
+        </h4>
+    </div>
+</div>
+<div class="idle"></div>
+<div class="success" *ngIf="status === 'success' ">
+    <div class="content">
+        <img src="../../../assets/images/status-idle.gif" alt="status normal" class="idle">
+        <h1>
+            Status normal
+        </h1>
+        <h3>
+            O sistema de alarme de incêndio está operante
+        </h3>
+        <h4>
+            Não há alarmes ativos.
+        </h4>
+    </div>
+</div>

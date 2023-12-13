@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-flow: row;
+    background-color: #f4f4f4;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    min-height: 70px;
+
+}
+
+.col-1 {
+    min-width: 70%;
+}
+
+.col-2 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.device-name {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: small;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.device-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.device-image {
+    width: 65px;
+}
+
+.true {
+    color: green;
+}
+
+.false {
+    color: red;
+}
+
+svg {
+    bottom: 0;
+}
