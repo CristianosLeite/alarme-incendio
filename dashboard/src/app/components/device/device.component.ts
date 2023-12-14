@@ -12,14 +12,14 @@ import { WebsocketService } from '../../services/websocket.service';
 export class DeviceComponent implements OnChanges {
   @Input() device: string = 'none';
   @Input() title: string = 'Desconhecido';
-  @Input() status: boolean = true;
+  @Input() status: boolean = false;
   @Input() imgPath: string = '';
 
   constructor(private websocketService: WebsocketService) {}
   
   ngOnChanges() {
-    this.websocketService.getStatus(this.device).subscribe((message) => {
-      console.log(message);
+    this.websocketService.getStatus(this.device).subscribe((status) => {
+      this.status = status;
     });
   }
 }

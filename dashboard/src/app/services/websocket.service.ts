@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class WebsocketService {
   private sockets: { [key: string]: WebSocket } = {};
 
-  constructor() {}
+  constructor() {
+    this.connect('g1');
+    this.connect('g2');
+    this.connect('transporte');
+    this.connect('adm');
+    this.connect('residuos');
+  }
 
   connect(route: string) {
     if (!this.sockets[route]) {
-      this.sockets[route] = new WebSocket(
-        `ws://localhost:1880/ws/${route}`
-      );
+      this.sockets[route] = new WebSocket(`ws://192.168.10.03:1880/ws/${route}`);
     }
   }
 
@@ -31,16 +35,14 @@ export class WebsocketService {
   }
 
   getStatus(route: string): Observable<boolean> {
+    let subject = new Subject<boolean>();
+
     if (this.sockets[route]) {
-      return new Observable((observer) => {
-        this.sockets[route].onmessage = (event) => observer.next(event.data);
-        this.sockets[route].onerror = (event) => observer.error(event);
-        this.sockets[route].onclose = () => observer.complete();
-      });
+      this.sockets[route].onmessage = (event) => subject.next(event.data);
+      this.sockets[route].onerror = (event) => subject.error(event);
+      this.sockets[route].onclose = () => subject.complete();
     }
 
-    return new Observable((observer) => {
-      observer.error('No socket connection.');
-    });
+    return subject.asObservable();
   }
 }
