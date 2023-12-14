@@ -8,6 +8,7 @@ export class WebsocketService {
   private sockets: { [key: string]: WebSocket } = {};
 
   constructor() {
+    this.connect('portaria')
     this.connect('g1');
     this.connect('g2');
     this.connect('transporte');
