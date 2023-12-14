@@ -1,7 +1,7 @@
 <div class="container">
     <div class="col-1">
         <div class="device-name">
-            <p>{{ device }}</p>
+            <p>{{ title }}</p>
         </div>
         <div class="device-status">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill true" viewBox="0 0 16 16" *ngIf="status">
@@ -12,5 +12,5 @@
               </svg>
         </div>
     </div>
-        <img src="{{ imgPath }}" alt="Logo {{ device }}" class="device-image">
+        <img src="{{ imgPath }}" alt="Logo {{ title }}" class="device-image">
 </div>
