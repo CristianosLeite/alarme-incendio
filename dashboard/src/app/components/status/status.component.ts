@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { StatusService } from '../../services/status.service';
 
@@ -9,14 +9,22 @@ import { StatusService } from '../../services/status.service';
   templateUrl: './status.component.html',
   styleUrl: './status.component.scss'
 })
-export class StatusComponent {
+export class StatusComponent implements OnInit, OnDestroy {
 
-  @Input() status: boolean | null = false;
+  status: boolean | null = false;
   @Input() device: string = 'setor desconhecido';
 
   constructor(private statusService: StatusService) {
     this.statusService.statusChanged.subscribe((status) => {
       this.status = status;
     });
+  }
+  
+  ngOnInit(): void {
+    this.statusService.emitStatus();
+  }
+
+  ngOnDestroy() {
+    this.statusService.statusChanged.unsubscribe();
   }
 }

@@ -4,7 +4,6 @@ import { NgIf } from '@angular/common';
 import { WebsocketService } from '../../services/websocket.service';
 import { Subject } from 'rxjs';
 import { Subscription } from 'rxjs';
-import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-device',
@@ -23,16 +22,12 @@ export class DeviceComponent implements OnChanges {
   @Input() status: boolean | null = false;
   @Input() imgPath: string = '';
 
-  constructor(
-    private websocketService: WebsocketService, 
-    private statusService: StatusService
-  ) {}
+  constructor(private websocketService: WebsocketService) {}
 
   ngOnChanges() {
     this.websocketService.connect(this.device);
     this.subject.next(this.device);
     this.subscribeToStatus();
-    this.statusService.emitStatus(this.status);
   }
 
   ngOnDestroy() {

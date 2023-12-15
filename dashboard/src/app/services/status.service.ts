@@ -1,4 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { WebsocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,12 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 export class StatusService {
   @Output() statusChanged: EventEmitter<boolean | null> = new EventEmitter<boolean | null>();
 
-  emitStatus(status: boolean | null) {
-    this.statusChanged.emit(status);
+  constructor(private websocketService: WebsocketService) {}
+
+  emitStatus() {
+    this.websocketService.connect('status');
+    this.websocketService.getStatus('status').subscribe((status) => {
+      this.statusChanged.emit(status);
+    });
   }
 }
