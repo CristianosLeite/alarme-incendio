@@ -9,7 +9,7 @@ export class WebsocketService {
 
   connect(route: string) {
     if (!this.sockets[route]) {
-      this.sockets[route] = new WebSocket(`ws://192.168.10.03:1880/ws/${route}`);
+      this.sockets[route] = new WebSocket(`ws://192.168.10.3:1880/ws/${route}`);
     }
   }
 

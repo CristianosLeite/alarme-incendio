@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-status',
@@ -10,7 +11,12 @@ import { NgIf } from '@angular/common';
 })
 export class StatusComponent {
 
-  @Input() status: string = 'success';
+  @Input() status: boolean | null = false;
   @Input() device: string = 'setor desconhecido';
 
+  constructor(private statusService: StatusService) {
+    this.statusService.statusChanged.subscribe((status) => {
+      this.status = status;
+    });
+  }
 }

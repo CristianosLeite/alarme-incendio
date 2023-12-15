@@ -1,13 +1,15 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { NgIf } from '@angular/common';
 import { WebsocketService } from '../../services/websocket.service';
 import { Subject } from 'rxjs';
 import { Subscription } from 'rxjs';
+import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-device',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgOptimizedImage],
   templateUrl: './device.component.html',
   styleUrl: './device.component.scss',
 })
@@ -18,15 +20,19 @@ export class DeviceComponent implements OnChanges {
 
   @Input() device: string = 'none';
   @Input() title: string = 'Desconhecido';
-  @Input() status: boolean = false;
+  @Input() status: boolean | null = false;
   @Input() imgPath: string = '';
 
-  constructor(private websocketService: WebsocketService) {}
+  constructor(
+    private websocketService: WebsocketService, 
+    private statusService: StatusService
+  ) {}
 
   ngOnChanges() {
     this.websocketService.connect(this.device);
     this.subject.next(this.device);
     this.subscribeToStatus();
+    this.statusService.emitStatus(this.status);
   }
 
   ngOnDestroy() {

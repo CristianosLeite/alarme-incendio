@@ -33,11 +33,8 @@
 }
 
 .device-image {
-    width: 100px;
-    height: 50px;
-    position: relative;
+    display: flex;
     align-self: center;
-    margin-left: 0;
 }
 
 .true {
