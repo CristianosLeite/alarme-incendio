@@ -24,14 +24,15 @@ export class DeviceComponent implements OnChanges {
   constructor(private websocketService: WebsocketService) {}
 
   ngOnChanges() {
-    this.subject.next(this.device);
     this.websocketService.connect(this.device);
+    this.subject.next(this.device);
     this.subscribeToStatus();
   }
 
   ngOnDestroy() {
     if (this.statusSubscription) {
       this.statusSubscription.unsubscribe();
+      this.websocketService.closeConnection(this.device);
     }
   }
 
