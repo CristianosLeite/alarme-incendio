@@ -1,4 +1,4 @@
-<div class="failure" *ngIf="status === false ">
+<div class="failure" *ngIf="!status && !isActive">
     <div class="content">
         <img src="../../../assets/images/status_falha.png" alt="status falha" class="pulse">
         <h1>
@@ -12,7 +12,7 @@
         </h4>
     </div>
 </div>
-<div class="active" *ngIf="status === null ">
+<div class="active" *ngIf="isActive">
     <div class="content">
         <img src="../../../assets/images/status_acionado.png" alt="status ativo" class="pulse">
         <h1>
@@ -27,7 +27,7 @@
     </div>
 </div>
 <div class="idle"></div>
-<div class="success" *ngIf="status === true ">
+<div class="success" *ngIf="status && !isActive">
     <div class="content">
         <img src="../../../assets/images/status-idle.gif" alt="status normal" class="idle">
         <h1>

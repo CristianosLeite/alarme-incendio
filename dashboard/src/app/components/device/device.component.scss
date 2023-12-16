@@ -1,7 +1,6 @@
 .container {
     display: flex;
     flex-flow: row;
-    background-color: #f4f4f4;
     padding: 10px;
     border: 1px solid black;
     border-radius: 10px;
@@ -45,6 +44,22 @@
     color: red;
 }
 
+.active {
+    color: yellow;
+}
+
 svg {
     bottom: 0;
+}
+
+#false {
+    background-color: yellow;
+}
+
+#true {
+    background-color: #f4f4f4;
+}
+
+#active {
+    background-color: orangered;
 }

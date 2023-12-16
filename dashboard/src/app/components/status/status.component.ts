@@ -11,20 +11,35 @@ import { StatusService } from '../../services/status.service';
 })
 export class StatusComponent implements OnInit, OnDestroy {
 
-  status: boolean | null = false;
+  @Input() status: boolean = false;
+  @Input()isActive: boolean = false;
+
   @Input() device: string = 'setor desconhecido';
 
   constructor(private statusService: StatusService) {
     this.statusService.statusChanged.subscribe((status) => {
       this.status = status;
     });
+    this.statusService.alarmesChanged.subscribe((status) => {
+      this.isActive = status;
+    });
+    this.statusService.deviceChanged.subscribe((device) => {
+      this.device = device.device;
+    });
   }
   
   ngOnInit(): void {
-    this.statusService.emitStatus();
+    this.statusService.emitStatus('status');
+    this.statusService.emitStatus('alarmes');
+    this.statusService.emitStatus('acionadores');
   }
 
   ngOnDestroy() {
+    this.statusService.closeConnection('status');
+    this.statusService.closeConnection('alarmes');
+    this.statusService.closeConnection('acionadores');
     this.statusService.statusChanged.unsubscribe();
+    this.statusService.alarmesChanged.unsubscribe();
+    this.statusService.deviceChanged.unsubscribe();
   }
 }

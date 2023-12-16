@@ -21,13 +21,16 @@ export class DeviceComponent implements OnChanges {
   @Input() title: string = 'Desconhecido';
   @Input() status: boolean | null = false;
   @Input() imgPath: string = '';
+  @Input() isActive: boolean = false;
 
   constructor(private websocketService: WebsocketService) {}
 
   ngOnChanges() {
     this.websocketService.connect(this.device);
+    this.websocketService.connect(`alarmes/${this.device}`);
     this.subject.next(this.device);
     this.subscribeToStatus();
+    this.subscribeToAlarmes();
   }
 
   ngOnDestroy() {
@@ -40,6 +43,12 @@ export class DeviceComponent implements OnChanges {
   private subscribeToStatus() {
     this.statusSubscription = this.websocketService.getStatus(this.device).subscribe((status) => {
       this.status = status;
+    });
+  }
+
+  private subscribeToAlarmes() {
+    this.statusSubscription = this.websocketService.getStatus(`alarmes/${this.device}`).subscribe((status) => {
+      this.isActive = status;
     });
   }
 }
