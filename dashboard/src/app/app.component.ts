@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { GridComponent } from './components/grid/grid.component';
 import { DeviceComponent } from './components/device/device.component';
@@ -13,6 +13,8 @@ import { FooterComponent } from './components/footer/footer.component';
   imports: [
     CommonModule, 
     RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     HeaderComponent,
     GridComponent,
     DeviceComponent,
