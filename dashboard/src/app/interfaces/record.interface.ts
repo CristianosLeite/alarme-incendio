@@ -1,8 +1,8 @@
-export interface Record {
-    id: number;
-    location: string;
-    recognizes: boolean;
-    eventDate: string;
-    activatedAt: string;
-    deactivatedAt: string;
+export interface Evento {
+  evento_id: number;
+  local_acionamento: string;
+  reconhece: boolean;
+  data_evento: string;
+  hora_acionamento: string;
+  hora_desligamento: string;
 }

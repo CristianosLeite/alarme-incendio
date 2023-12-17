@@ -1,38 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { FilterTagsComponent } from '../components/filter-tags/filter-tags.component';
-import { RecordsService } from '../services/records.service';
-import { Record } from '../interfaces/record.interface';
+import { DatabaseService } from '../services/database.service';
+import { Evento } from '../interfaces/record.interface';
 
 @Component({
   selector: 'app-alarm-history',
   standalone: true,
-  imports: [NgIf, NgFor, FilterTagsComponent],
+  imports: [NgIf, NgFor, FilterTagsComponent, DatePipe],
   templateUrl: './alarm-history.component.html',
-  styleUrl: './alarm-history.component.scss'
+  styleUrl: './alarm-history.component.scss',
 })
-
 export class AlarmHistoryComponent implements OnInit {
-  isLoading: boolean = true;
-  records: Record[] = [];
+  records: Evento[] = [];
 
   tags: string[] = [];
 
-  constructor(private recordsService: RecordsService) {
-    this.recordsService.RecordsLoaded.subscribe((records: Record[]) => {
+  constructor(private databaseService: DatabaseService) {
+    this.databaseService.RecordsLoaded.subscribe((records: Evento[]) => {
       this.records = records;
     });
   }
 
   ngOnInit() {
-    this.records = this.recordsService.records;
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 500);
+    this.databaseService.getRecords();
+    this.records = this.databaseService.records;
   }
 
   onTagsChanged(tags: string[]) {
     this.tags = tags;
-    this.recordsService.filterRecords(tags);
+    this.databaseService.filterRecords(tags);
   }
 }

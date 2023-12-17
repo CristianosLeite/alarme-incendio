@@ -1,40 +1,49 @@
 .content {
-    display: flex;
-    flex-flow: row;
-    height: 50%;
+  display: flex;
+  flex-flow: row;
+  height: 50%;
 }
 
-.top-field-1, .top-field-2, .top-field-3, .top-field-4 {
-    height: 100%;
-    min-width: 24.8%;
+.top-field-1,
+.top-field-2,
+.top-field-3,
+.top-field-4 {
+  height: 100%;
+  min-width: 24.8%;
 }
 
-.top-field-1, .top-field-2, .top-field-3, .top-field-4 {
-    border-bottom: 2px solid black;
+.top-field-1,
+.top-field-2,
+.top-field-3,
+.top-field-4 {
+  border-bottom: 2px solid black;
 }
 
 .top-field-2 {
-    border-right: 2px solid black;
+  border-right: 2px solid black;
 }
 
-.bottom-field-1, .bottom-field-2, .bottom-field-3, .bottom-field-4 {
-    height: 100%;
-    min-width: 24.8%;
+.bottom-field-1,
+.bottom-field-2,
+.bottom-field-3,
+.bottom-field-4 {
+  height: 100%;
+  min-width: 24.8%;
 }
 
 .bottom-field-1 {
-    border-left: 2px solid black;
+  border-left: 2px solid black;
 }
 
 .bottom-field-2 {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
 }
 
 .bottom-field-3 {
-    border-right: 2px solid black;
+  border-right: 2px solid black;
 }
 
 .bottom-field-4 {
-    border-right: 2px solid black;
+  border-right: 2px solid black;
 }

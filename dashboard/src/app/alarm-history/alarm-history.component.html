@@ -1,11 +1,7 @@
 <app-filter-tags (tagsChanged)="onTagsChanged($event)"></app-filter-tags>
 <div class="container">
-  <div
-    class="card scrollable-component"
-  >
-    <table
-      class="table table-striped"
-    >
+  <div class="card scrollable-component">
+    <table class="table table-striped">
       <thead class="table-light">
         <tr>
           <th scope="col">Id</th>
@@ -18,12 +14,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let record of records">
-          <td scope="row">{{ record.id }}</td>
-          <td>{{ record.location }}</td>
-          <td scope="row">{{ record.recognizes }}</td>
-          <td>{{ record.eventDate }}</td>
-          <td>{{ record.activatedAt }}</td>
-          <td>{{ record.deactivatedAt }}</td>
+          <td scope="row">{{ record.evento_id }}</td>
+          <td>{{ record.local_acionamento }}</td>
+          <td scope="row">{{ record.reconhece.toString().toUpperCase() }}</td>
+          <td>{{ record.data_evento | date : "dd-MM-yyyy" }}</td>
+          <td>{{ record.hora_acionamento.split(".", 1) }}</td>
+          <td>{{ record.hora_desligamento.split(".", 1) }}</td>
           <tfoot *ngIf="!records.length">
             <tr>
               <td colspan="6">Nenhum registro encontrado.</td>

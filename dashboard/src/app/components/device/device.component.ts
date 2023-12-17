@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
   styleUrl: './device.component.scss',
 })
 export class DeviceComponent implements OnChanges {
-
   subject: Subject<string> = new Subject<string>();
   statusSubscription = new Subscription();
 
@@ -42,14 +41,18 @@ export class DeviceComponent implements OnChanges {
   }
 
   private subscribeToStatus() {
-    this.statusSubscription = this.websocketService.getStatus(this.device).subscribe((status) => {
-      this.status = status;
-    });
+    this.statusSubscription = this.websocketService
+      .getStatus(this.device)
+      .subscribe((status) => {
+        this.status = status;
+      });
   }
 
   private subscribeToAlarmes() {
-    this.statusSubscription = this.websocketService.getStatus(`alarmes/${this.device}`).subscribe((status) => {
-      this.isActive = status;
-    });
+    this.statusSubscription = this.websocketService
+      .getStatus(`alarmes/${this.device}`)
+      .subscribe((status) => {
+        this.isActive = status;
+      });
   }
 }

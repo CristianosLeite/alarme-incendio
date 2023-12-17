@@ -5,11 +5,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-filter-tags',
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    FormsModule,
-  ],
+  imports: [NgIf, NgFor, FormsModule],
   templateUrl: './filter-tags.component.html',
   styleUrl: './filter-tags.component.scss',
 })

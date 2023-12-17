@@ -7,12 +7,11 @@ import { StatusService } from '../../services/status.service';
   standalone: true,
   imports: [NgIf],
   templateUrl: './status.component.html',
-  styleUrl: './status.component.scss'
+  styleUrl: './status.component.scss',
 })
 export class StatusComponent implements OnInit, OnDestroy {
-
   @Input() status: boolean = false;
-  @Input()isActive: boolean = false;
+  @Input() isActive: boolean = false;
 
   @Input() device: string = 'setor desconhecido';
 
@@ -27,7 +26,7 @@ export class StatusComponent implements OnInit, OnDestroy {
       this.device = device.device;
     });
   }
-  
+
   ngOnInit(): void {
     this.statusService.emitStatus('status');
     this.statusService.emitStatus('alarmes');
