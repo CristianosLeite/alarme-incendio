@@ -19,7 +19,7 @@ import { FooterComponent } from './components/footer/footer.component';
     GridComponent,
     DeviceComponent,
     StatusComponent,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
