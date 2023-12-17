@@ -37,6 +37,7 @@ export class DeviceComponent implements OnChanges {
     if (this.statusSubscription) {
       this.statusSubscription.unsubscribe();
       this.websocketService.closeConnection(this.device);
+      this.websocketService.closeConnection(`alarmes/${this.device}`);
     }
   }
 
