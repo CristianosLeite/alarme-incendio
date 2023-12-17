@@ -1,73 +1,56 @@
-.body {
-    display: block;
-    flex-direction: column;
-    margin: 0;
-    top: 0;
-    overflow: auto;
+.container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
 
 .connections {
-    display: flex;
-    flex-flow: column;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 150px;
-}
-
-.status {
-    display: block;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 5px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .device-master {
-    display: block;
-    height: 70px;
-    width: 250px;
-    z-index: 100;
+  display: block;
+  height: 70px;
+  width: 250px;
+  z-index: 100;
 }
 
 .grid {
-    display: block;
-    position: absolute;
-    height: 80px;
-    width: 80%;
-    margin-top: -20px;
+  display: block;
+  height: 80px;
+  width: 80%;
+  margin-bottom: -70px;
 }
 
 .slot-slave {
-    display: flex;
-    flex-wrap: wrap;
-    height: 100px;
-    width: 100%;
-    align-items: center;
-    justify-content: space-around;
-    margin: 40px;
+  display: flex;
+  flex-flow: row;
+  height: 100px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  margin: 40px;
 }
 
 .device-slave {
-    margin-top: 20px;
-    display: block;
-    height: 70px;
-    width: 180px;
-    z-index: 100;
-    flex: 0 1 17%;
-}
-
-.app-footer {
-    flex-shrink: 0;
+  display: block;
+  height: 70px;
+  width: 250px;
+  z-index: 100;
 }
 
 @media (min-width: 1080px) {
-    .body {
-        transform: scale(0.7);
-    }
+  .container {
+    transform: scale(0.7);
+  }
 }
 
 @media (min-width: 1440px) {
-    .body {
-        transform: scale(0.9);
-    }
+  .container {
+    transform: scale(0.9);
+  }
 }
