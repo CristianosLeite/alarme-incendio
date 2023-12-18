@@ -2,6 +2,7 @@ import { Injectable, Output, EventEmitter, isDevMode } from '@angular/core';
 import { Evento } from '../interfaces/record.interface';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { Falha } from '../interfaces/failure.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ export class DatabaseService {
   @Output() RecordsLoaded = new EventEmitter<Evento[]>();
   @Output() FailuresLoaded = new EventEmitter<Evento[]>();
   records: Evento[] = [];
+  failures: Falha[] = [];
   recordsUrl = 'http://192.168.10.3:1880/records/all';
   failuresUrl = 'http://192.168.10.3:1880/failures/all';
 
@@ -65,8 +67,8 @@ export class DatabaseService {
 
   async getFailures(): Promise<void> {
     await lastValueFrom(this.http.get(this.failuresUrl, { responseType: 'json' })).then(
-      (failures) => {
-        this.records = failures as Evento[];
+      (failure) => {
+        this.failures = failure as Falha[];
         this.FailuresLoaded.emit(this.records);
       }
     );
