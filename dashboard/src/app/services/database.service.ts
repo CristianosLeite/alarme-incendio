@@ -28,6 +28,7 @@ export class DatabaseService {
     const filteredValues = this.records.filter((record: Evento) => {
       return (
         list.some((id) => id === record.evento_id.toString().toLowerCase()) ||
+        list.some((sector) => sector === record.setor.toLowerCase()) ||
         list.some(
           (location) => location === record.local_acionamento.toLowerCase()
         ) ||
