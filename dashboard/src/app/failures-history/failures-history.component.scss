@@ -26,17 +26,7 @@
 
 .table td:first-child,
 .table th:first-child {
-  width: 6%;
-}
-
-.table td:nth-child(2),
-.table th:nth-child(2) {
-  width: 12%;
-}
-
-.table td:nth-child(3),
-.table th:nth-child(3) {
-  width: 28%;
+  width: 10%;
 }
 
 @media (max-width: 768px) {
