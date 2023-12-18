@@ -1,0 +1,28 @@
+<app-filter-tags (tagsChanged)="onTagsChanged($event)"></app-filter-tags>
+<div class="container">
+  <div class="card scrollable-component">
+    <table class="table table-striped">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Dispositivo</th>
+          <th scope="col">Data da Falha</th>
+          <th scope="col">Hora da falha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let failure of failures">
+          <td scope="row">{{ failure.falha_id }}</td>
+          <td>{{ failure.dispositivo }}</td>
+          <td>{{ failure.data_falha | date : "dd-MM-yyyy" }}</td>
+          <td>{{ failure.hora_falha!.split(".", 1) }}</td>
+          <tfoot *ngIf="!failures.length">
+            <tr>
+              <td colspan="6">Nenhum registro encontrado.</td>
+            </tr>
+          </tfoot>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -8,12 +8,15 @@ import { lastValueFrom } from 'rxjs';
 })
 export class DatabaseService {
   @Output() RecordsLoaded = new EventEmitter<Evento[]>();
+  @Output() FailuresLoaded = new EventEmitter<Evento[]>();
   records: Evento[] = [];
-  url = 'http://192.168.10.3:1880/records/all';
+  recordsUrl = 'http://192.168.10.3:1880/records/all';
+  failuresUrl = 'http://192.168.10.3:1880/failures/all';
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
-      this.url = 'http://localhost:1880/records/all';
+      this.recordsUrl = 'http://localhost:1880/records/all';
+      this.failuresUrl = 'http://localhost:1880/failures/all';
     }
   }
 
@@ -52,10 +55,19 @@ export class DatabaseService {
   }
 
   async getRecords(): Promise<void> {
-    await lastValueFrom(this.http.get(this.url, { responseType: 'json' })).then(
+    await lastValueFrom(this.http.get(this.recordsUrl, { responseType: 'json' })).then(
       (records) => {
         this.records = records as Evento[];
         this.RecordsLoaded.emit(this.records);
+      }
+    );
+  }
+
+  async getFailures(): Promise<void> {
+    await lastValueFrom(this.http.get(this.failuresUrl, { responseType: 'json' })).then(
+      (failures) => {
+        this.records = failures as Evento[];
+        this.FailuresLoaded.emit(this.records);
       }
     );
   }
