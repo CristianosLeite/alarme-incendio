@@ -9,7 +9,7 @@ import { Falha } from '../interfaces/failure.interface';
 })
 export class DatabaseService {
   @Output() RecordsLoaded = new EventEmitter<Evento[]>();
-  @Output() FailuresLoaded = new EventEmitter<Evento[]>();
+  @Output() FailuresLoaded = new EventEmitter<Falha[]>();
   records: Evento[] = [];
   failures: Falha[] = [];
   recordsUrl = 'http://192.168.10.3:1880/records/all';
@@ -69,7 +69,7 @@ export class DatabaseService {
     await lastValueFrom(this.http.get(this.failuresUrl, { responseType: 'json' })).then(
       (failure) => {
         this.failures = failure as Falha[];
-        this.FailuresLoaded.emit(this.records);
+        this.FailuresLoaded.emit(this.failures);
       }
     );
   }
