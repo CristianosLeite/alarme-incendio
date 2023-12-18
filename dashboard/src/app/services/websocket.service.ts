@@ -1,15 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
+
+  wsServer = 'ws://192.168.10.3:1880/ws/';
+
+  constructor() {
+    if (isDevMode()) {
+      this.wsServer = 'ws://localhost:1880/ws/';
+    }
+  }
+
   private sockets: { [key: string]: WebSocket } = {};
 
   connect(route: string) {
     if (!this.sockets[route]) {
-      this.sockets[route] = new WebSocket(`ws://localhost:1880/ws/${route}`);
+      this.sockets[route] = new WebSocket(this.wsServer + route);
     }
   }
 

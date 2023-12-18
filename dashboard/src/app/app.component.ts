@@ -6,7 +6,6 @@ import { GridComponent } from './components/grid/grid.component';
 import { DeviceComponent } from './components/device/device.component';
 import { StatusComponent } from './components/status/status.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
