@@ -1,4 +1,4 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, isDevMode } from '@angular/core';
 import { Evento } from '../interfaces/record.interface';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
@@ -9,8 +9,13 @@ import { lastValueFrom } from 'rxjs';
 export class DatabaseService {
   @Output() RecordsLoaded = new EventEmitter<Evento[]>();
   records: Evento[] = [];
+  url = 'http://192.168.10.3:1880/records/all';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    if (isDevMode()) {
+      this.url = 'http://localhost:1880/records/all';
+    }
+  }
 
   filterRecords(tags: string[]) {
     if (tags.length === 0) {
@@ -46,11 +51,11 @@ export class DatabaseService {
   }
 
   async getRecords(): Promise<void> {
-    await lastValueFrom(
-      this.http.get('http://localhost:1880/records/all')
-    ).then((records) => {
-      this.records = records as Evento[];
-      this.RecordsLoaded.emit(this.records);
-    });
+    await lastValueFrom(this.http.get(this.url, { responseType: 'json' })).then(
+      (records) => {
+        this.records = records as Evento[];
+        this.RecordsLoaded.emit(this.records);
+      }
+    );
   }
 }
