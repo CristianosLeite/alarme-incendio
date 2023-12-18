@@ -18,8 +18,8 @@
           <td>{{ record.local_acionamento }}</td>
           <td scope="row">{{ record.reconhece.toString().toUpperCase() }}</td>
           <td>{{ record.data_evento | date : "dd-MM-yyyy" }}</td>
-          <td>{{ record.hora_acionamento.split(".", 1) }}</td>
-          <td>{{ record.hora_desligamento.split(".", 1) }}</td>
+          <td>{{ record.hora_acionamento!.split(".", 1) }}</td>
+          <td>{{ record.hora_desligamento!.split(".", 1) }}</td>
           <tfoot *ngIf="!records.length">
             <tr>
               <td colspan="6">Nenhum registro encontrado.</td>
