@@ -22,55 +22,46 @@ export class DatabaseService {
     }
   }
 
-  filterRecords(tags: string[]) {
+  filterData(tags: string[], data: any[], dataLoaded: EventEmitter<any[]>, fields: string[]) {
     if (tags.length === 0) {
-      this.RecordsLoaded.emit(this.records);
-      return this.records;
+      dataLoaded.emit(data);
+      return data;
     }
 
     const list = tags.map((tag) => tag.toLowerCase().trim());
 
-    const filteredValues = this.records.filter((record: Evento) => {
-      return (
-        list.some((id) => id === record.evento_id.toString().toLowerCase()) ||
-        list.some((sector) => sector === record.setor.toLowerCase()) ||
-        list.some(
-          (location) => location === record.local_acionamento.toLowerCase()
-        ) ||
-        list.some(
-          (recognizes) =>
-            recognizes === record.reconhece.toString().toLowerCase()
-        ) ||
-        list.some(
-          (eventDate) =>
-            eventDate ===
-            new Date(record.data_evento)
-              .toLocaleDateString('pt-BR')
-              .replace(/\//g, '-')
-              .toLowerCase()
-        )
+    const filteredValues = data.filter((item) => {
+      return fields.some((field) => 
+        list.some((tag) => tag === item[field].toString().toLowerCase())
       );
     });
 
-    this.RecordsLoaded.emit(filteredValues);
+    dataLoaded.emit(filteredValues);
     return filteredValues;
   }
 
-  async getRecords(): Promise<void> {
-    await lastValueFrom(this.http.get(this.recordsUrl, { responseType: 'json' })).then(
-      (records) => {
-        this.records = records as Evento[];
-        this.RecordsLoaded.emit(this.records);
+  filterRecords(tags: string[]) {
+    return this.filterData(tags, this.records, this.RecordsLoaded, ['evento_id', 'setor', 'local_acionamento', 'reconhece', 'data_evento']);
+  }
+
+  filterFailures(tags: string[]) {
+    return this.filterData(tags, this.failures, this.FailuresLoaded, ['falha_id', 'dispositivo', 'data_falha']);
+  }
+
+  async fetchData(url: string, dataLoaded: EventEmitter<any[]>, data: any) {
+    await lastValueFrom(this.http.get(url, { responseType: 'json' })).then(
+      (response) => {
+        data = response;
+        dataLoaded.emit(data);
       }
     );
   }
 
+  async getRecords(): Promise<void> {
+    await this.fetchData(this.recordsUrl, this.RecordsLoaded, this.records);
+  }
+
   async getFailures(): Promise<void> {
-    await lastValueFrom(this.http.get(this.failuresUrl, { responseType: 'json' })).then(
-      (failure) => {
-        this.failures = failure as Falha[];
-        this.FailuresLoaded.emit(this.failures);
-      }
-    );
+    await this.fetchData(this.failuresUrl, this.FailuresLoaded, this.failures);
   }
 }
