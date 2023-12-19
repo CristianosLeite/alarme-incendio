@@ -23,6 +23,10 @@ export class DatabaseService {
   }
 
   filterRecords(tags: string[]): Evento[] {
+    if (tags.length === 0) {
+      this.RecordsLoaded.emit(this.records);
+      return this.records;
+    }
     const filteredValues = this.filterList(tags, this.records, (record) => [
       record.evento_id.toString(),
       record.setor,
@@ -38,6 +42,10 @@ export class DatabaseService {
   }
 
   filterFailures(tags: string[]): Falha[] {
+    if (tags.length === 0) {
+      this.FailuresLoaded.emit(this.failures);
+      return this.failures;
+    }
     const filteredValues = this.filterList(tags, this.failures, (failure) => [
       failure.falha_id.toString(),
       failure.dispositivo,
