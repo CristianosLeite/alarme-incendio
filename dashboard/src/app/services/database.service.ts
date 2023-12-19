@@ -22,45 +22,68 @@ export class DatabaseService {
     }
   }
 
-  filterData(tags: string[], data: any[], dataLoaded: EventEmitter<any[]>, fields: string[]) {
-    let filteredValues = [...data];
-  
-    if (tags.length > 0) {
-      const list = tags.map((tag) => tag.toLowerCase().trim());
-  
-      filteredValues = data.filter((item) => {
-        return fields.some((field) => 
-          list.some((tag) => item[field].toString().toLowerCase().includes(tag))
-        );
-      });
-    }
-  
-    dataLoaded.emit(filteredValues);
+  filterRecords(tags: string[]): Evento[] {
+    const filteredValues = this.filterList(tags, this.records, (record) => [
+      record.evento_id.toString(),
+      record.setor,
+      record.local_acionamento,
+      record.reconhece.toString(),
+      new Date(record.data_evento)
+        .toLocaleDateString('pt-BR')
+        .replace(/\//g, '-'),
+    ]);
+
+    this.RecordsLoaded.emit(filteredValues);
     return filteredValues;
   }
 
-  filterRecords(tags: string[]) {
-    return this.filterData(tags, this.records, this.RecordsLoaded, ['evento_id', 'setor', 'local_acionamento', 'reconhece', 'data_evento']);
+  filterFailures(tags: string[]): Falha[] {
+    const filteredValues = this.filterList(tags, this.failures, (failure) => [
+      failure.falha_id.toString(),
+      failure.dispositivo,
+      new Date(failure.data_falha)
+        .toLocaleDateString('pt-BR')
+        .replace(/\//g, '-'),
+    ]);
+
+    this.FailuresLoaded.emit(filteredValues);
+    return filteredValues;
   }
 
-  filterFailures(tags: string[]) {
-    return this.filterData(tags, this.failures, this.FailuresLoaded, ['falha_id', 'dispositivo', 'data_falha']);
-  }
+  private filterList<T>(
+    tags: string[],
+    list: T[],
+    getPropertyValues: (item: T) => string[]
+  ): T[] {
+    if (tags.length === 0) {
+      return list;
+    }
 
-  async fetchData(url: string, dataLoaded: EventEmitter<any[]>, data: any) {
-    await lastValueFrom(this.http.get(url, { responseType: 'json' })).then(
-      (response) => {
-        data = response;
-        dataLoaded.emit(data);
-      }
+    const normalizedTags = tags.map((tag) => tag.toLowerCase().trim());
+
+    return list.filter((item) =>
+      getPropertyValues(item).some((value) =>
+        normalizedTags.includes(value.toLowerCase())
+      )
     );
   }
 
   async getRecords(): Promise<void> {
-    await this.fetchData(this.recordsUrl, this.RecordsLoaded, this.records);
+    const records = await this.fetchData<Evento>(this.recordsUrl);
+    this.records = records;
+    this.RecordsLoaded.emit(this.records);
   }
 
   async getFailures(): Promise<void> {
-    await this.fetchData(this.failuresUrl, this.FailuresLoaded, this.failures);
+    const failures = await this.fetchData<Falha>(this.failuresUrl);
+    this.failures = failures;
+    this.FailuresLoaded.emit(this.failures);
+  }
+
+  private async fetchData<T>(url: string): Promise<T[]> {
+    const response = await lastValueFrom(
+      this.http.get(url, { responseType: 'json' })
+    );
+    return response as T[];
   }
 }
