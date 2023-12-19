@@ -23,19 +23,18 @@ export class DatabaseService {
   }
 
   filterData(tags: string[], data: any[], dataLoaded: EventEmitter<any[]>, fields: string[]) {
-    if (tags.length === 0) {
-      dataLoaded.emit(data);
-      return data;
+    let filteredValues = [...data];
+  
+    if (tags.length > 0) {
+      const list = tags.map((tag) => tag.toLowerCase().trim());
+  
+      filteredValues = data.filter((item) => {
+        return fields.some((field) => 
+          list.some((tag) => item[field].toString().toLowerCase().includes(tag))
+        );
+      });
     }
-
-    const list = tags.map((tag) => tag.toLowerCase().trim());
-
-    const filteredValues = data.filter((item) => {
-      return fields.some((field) => 
-        list.some((tag) => tag === item[field].toString().toLowerCase())
-      );
-    });
-
+  
     dataLoaded.emit(filteredValues);
     return filteredValues;
   }
