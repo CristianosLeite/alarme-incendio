@@ -33,6 +33,6 @@ export class FailuresHistoryComponent implements OnInit {
 
   onTagsChanged(tags: string[]) {
     this.tags = tags;
-    this.databaseService.filterRecords(tags);
+    this.databaseService.filterFailures(tags);
   }
 }

@@ -15,12 +15,7 @@ export class DatabaseService {
   recordsUrl = 'http://192.168.10.3:1880/records/all';
   failuresUrl = 'http://192.168.10.3:1880/failures/all';
 
-  constructor(private http: HttpClient) {
-    if (isDevMode()) {
-      this.recordsUrl = 'http://localhost:1880/records/all';
-      this.failuresUrl = 'http://localhost:1880/failures/all';
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   filterRecords(tags: string[]): Evento[] {
     if (tags.length === 0) {
